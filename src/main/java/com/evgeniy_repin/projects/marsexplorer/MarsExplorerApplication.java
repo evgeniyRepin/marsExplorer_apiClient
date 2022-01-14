@@ -12,10 +12,5 @@ public class MarsExplorerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MarsExplorerApplication.class, args);
-        Properties properties = new Properties();
-        properties.setProperty("spring.cache.type", "none");
-        application.setDefaultProperties(properties);
-        application.run(args);
     }
-
 }
