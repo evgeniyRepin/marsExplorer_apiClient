@@ -8,14 +8,14 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class MarsExplorerApiService {
-
-    public MarsExplorerApiResponse getExplorerData(String explorerType) {
+//TODO create an interface for this service
+    public MarsExplorerApiResponse getExplorerData(String explorerType, int sol) {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<MarsExplorerApiResponse> responseEntity = restTemplate.getForEntity(
                 "https://api.nasa.gov/mars-photos/api/v1/rovers/" +
                         explorerType +
-                        "/photos?sol=2" +
+                        "/photos?sol=" + sol +
                         "&api_key=" + ApiKey.API_KEY.getKey()
                 , MarsExplorerApiResponse.class);
 
