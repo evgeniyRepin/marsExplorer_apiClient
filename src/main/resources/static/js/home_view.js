@@ -2,10 +2,10 @@ let marsApiButton = document.querySelectorAll("button[id*='marsExplorer']")
 
 marsApiButton.forEach(button => button.addEventListener('click', function () {
                                         const buttonId = this.id
-                                        const explorerId = buttonId.split('marsExplorer')[1]
+                                        const explorerName = buttonId.split('marsExplorer')[1]
 
-                                        let apiData = document.getElementById('marsApiExplorerData')
-                                        apiData.value = explorerId
+                                        let explorerNameParameter = document.getElementById('marsExplorerName')
+                                        explorerNameParameter.value = explorerName
                                         document.getElementById('formExplorerType').submit()
                                 }))
 
@@ -16,9 +16,9 @@ function getUrlParameter(name) {
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
-let marsExplorerType = getUrlParameter("marsApiExplorerData")
+let marsExplorerType = getUrlParameter("marsExplorerName")
 highlightButtonByExplorerType(marsExplorerType)
-document.getElementById('marsApiExplorerData').value = marsExplorerType
+document.getElementById('marsExplorerName').value = marsExplorerType
 
 
 let sol = getUrlParameter("sol")
@@ -31,12 +31,3 @@ function highlightButtonByExplorerType(explorerType) {
     document.getElementById('marsExplorer' + explorerType).classList.replace("btn-secondary", "btn-danger")
 }
 
-// if (marsExplorerType == 'Opportunity') {
-//     document.getElementById('marsExplorerOpportunity').classList.replace("btn-secondary", "btn-danger")
-// } else if (marsExplorerType == 'Curiosity'){
-//     document.getElementById('marsExplorerCuriosity').classList.replace("btn-secondary", "btn-danger")
-// } else if (marsExplorerType == 'Spirit'){
-//     document.getElementById('marsExplorerSpirit').classList.replace("btn-secondary", "btn-danger")
-// } else {
-//     document.getElementById('marsExplorerOpportunity').classList.replace("btn-secondary", "btn-danger")
-// }

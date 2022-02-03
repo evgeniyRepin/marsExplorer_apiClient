@@ -1,56 +1,79 @@
-<html xmlns:th="http://thymeleaf.org" lang="en">
-    <head>
-        <title>Mars Explorer API</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <title>Mars Explorer API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous"/>
-    </head>
-    <body>
-        <div class="container">
-            <h2>Welcome to the Mars Explorer API Web App</h2>
+</head>
+<body>
+<div class="container">
+    <h2>Welcome to the Mars Explorer API Web App</h2>
 
-            <form method="get" action="" id="formExplorerType">
-                <input type="hidden" id="marsApiExplorerData" name="marsApiExplorerData" value=""/>
-                <div class="btn-group btn-group-lg" role="group" style="margin-bottom: 1.5em; margin-top: 1.5em">
-                    <button type="button" class="btn btn-secondary" id="marsExplorerCuriosity">Curiosity</button>
-                    <button type="button" class="btn btn-secondary" id="marsExplorerOpportunity">Opportunity</button>
-                    <button type="button" class="btn btn-secondary" id="marsExplorerSpirit">Spirit</button>
-                </div>
+    <form method="get" action="/" id="formExplorerType">
+        <input type="hidden" th:field="${homeDto.marsExplorerName}"/>
+        <div class="btn-group btn-group-lg" role="group" style="margin-bottom: 1.5em; margin-top: 1.5em">
+            <button type="button" class="btn btn-secondary" id="marsExplorerCuriosity">Curiosity</button>
+            <button type="button" class="btn btn-secondary" id="marsExplorerOpportunity">Opportunity</button>
+            <button type="button" class="btn btn-secondary" id="marsExplorerSpirit">Spirit</button>
+        </div>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" name="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
-                        Default checkbox
-                    </label>
-                </div>
+        <!--        <div th:if="${homeDto.marsExplorerName == 'Opportunity' || homeDto.marsExplorerName == ''}">-->
+        <!--            <div th:text="${validCameras.get('Opportunity')}"></div>-->
+        <!--        </div>-->
+        <!--        <div th:if="${homeDto.marsExplorerName == 'Curiosity'}">-->
+        <!--            <div th:text="${validCameras.get('Curiosity')}"></div>-->
+        <!--        </div>-->
+        <!--            <div th:if="${homeDto.marsExplorerName == 'Spirit'}">-->
+        <!--            <div th:text="${validCameras.get('Spirit')}"></div>-->
+        <!--        </div>-->
 
-                <div>
-                    <label for="sol" class="form-label"><p class="fs-3">>Mars Sol(Mars day): </p></label>
-                    <div class="input-group input-group-lg" style="margin-bottom: 1em">
-                        <span class="input-group-text" id="basic-addon1">sol</span>
-                        <input type="number" class="form-control" id="sol" min="1" max="1000" name="sol" value="1" aria-describedby="basic-addon1">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-danger btn-lg">Submit</button>
-            </form>
-
-            <div th:each="index : ${#numbers.sequence(0,explorerData.photos.size()-1,4)}" class="row"
-                 style="margin-bottom: 1.5em">
-                <div class="col-sm">
-                    <img th:src="${explorerData.photos[index].imgSrc}" class="img-fluid"/>
-                </div>
-                <div class="col-sm" th:if="${index+1<explorerData.photos.size()}">
-                    <img th:src="${explorerData.photos[index+1].imgSrc}" class="img-fluid"/>
-                </div>
-                <div class="col-sm" th:if="${index+2<explorerData.photos.size()}">
-                    <img th:src="${explorerData.photos[index+2].imgSrc}" class="img-fluid"/>
-                </div>
-                <div class="col-sm" th:if="${index+3<explorerData.photos.size()}">
-                    <img th:src="${explorerData.photos[index+3].imgSrc}" class="img-fluid"/>
-                </div>
+        <div th:object="${homeDto}">
+            <div class="row">
+                <div th:replace="fragments/components :: checkbox('cameraFHAZ','Front Hazard Avoidance Camera')"></div>
+                <div th:replace="fragments/components :: checkbox('cameraRHAZ','Rear Hazard Avoidance Camera')"></div>
+                <div th:replace="fragments/components :: checkbox('cameraMAST','Mast Camera')"></div>
+            </div>
+            <div class="row">
+                <div th:replace="fragments/components :: checkbox('cameraCHEMCAM','Chemistry and Camera Complex')"></div>
+                <div th:replace="fragments/components :: checkbox('cameraMAHLI','Mars Hand Lens Imager')"></div>
+                <div th:replace="fragments/components :: checkbox('cameraMARDI','Mars Descent Imager')"></div>
+            </div>
+            <div class="row">
+                <div th:replace="fragments/components :: checkbox('cameraNAVCAM','Navigation Camera')"></div>
+                <div th:replace="fragments/components :: checkbox('cameraPANCAM','Panoramic Camera')"></div>
+                <div th:replace="fragments/components :: checkbox('cameraMINITES','Miniature Thermal Emission Spectrometer')"></div>
             </div>
         </div>
-        <script type="text/javascript" src="/js/home_view.js"></script>
-    </body>
+        <div>
+            <label for="sol" class="form-label"><p class="fs-3">>Mars Sol(Mars day): </p></label>
+            <div class="input-group input-group-lg" style="margin-bottom: 1em">
+                <span class="input-group-text" id="basic-addon1">sol</span>
+                <input type="number" class="form-control" id="sol" th:field="${homeDto.sol}" min="1" max="1000"
+                       value="1" aria-describedby="basic-addon1">
+            </div>
+        </div>
+
+        <button type="submit" class="btn-danger btn-lg">Submit</button>
+    </form>
+
+    <div th:each="index : ${#numbers.sequence(0,explorerData.photos.size()-1,4)}" class="row"
+         style="margin-bottom: 1.5em">
+        <div class="col-sm">
+            <img th:src="${explorerData.photos[index].imgSrc}" class="img-fluid"/>
+        </div>
+        <div class="col-sm" th:if="${index+1<explorerData.photos.size()}">
+            <img th:src="${explorerData.photos[index+1].imgSrc}" class="img-fluid"/>
+        </div>
+        <div class="col-sm" th:if="${index+2<explorerData.photos.size()}">
+            <img th:src="${explorerData.photos[index+2].imgSrc}" class="img-fluid"/>
+        </div>
+        <div class="col-sm" th:if="${index+3<explorerData.photos.size()}">
+            <img th:src="${explorerData.photos[index+3].imgSrc}" class="img-fluid"/>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/home_view.js"></script>
+</body>
 </html>
