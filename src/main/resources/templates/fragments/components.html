@@ -1,8 +1,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
+
 <div class="col-12 col-lg-4" th:fragment="checkbox(fieldName,cameraFullName)">
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" th:id="${fieldName}" th:field="*{__${fieldName}__}">
+        <input class="form-check-input" type="checkbox"
+               th:id="${fieldName}" th:field="*{__${fieldName}__}"
+               th:with="shortName=${#strings.replace(fieldName, 'camera', '')}"
+               th:disabled="${!#lists.contains(validCameras, shortName)}">
+<!--               th:attrappend="${#lists.contains(validCameras, 'cameraFHAZ')?'disabled':''}">-->
         <label class="form-check-label" th:for="${fieldName}" th:text="${cameraFullName}">
             Front Hazard Avoidance Camera
         </label>
@@ -10,5 +15,4 @@
 </div>
 
 
-
-</html>
+<!--${#strings.replace('__${fieldName}__', 'camera', '')-->
