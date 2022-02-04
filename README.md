@@ -1,6 +1,7 @@
 ## Mars Explorer Api-Client
 ***
 This is an application that allows you to upload the real Mars photos made by 3 NASA Mars Rovers: Curiosity, Opportunity and Spirit.
+The API is supported by [NASA] https://api.nasa.gov/
 
 Mars rovers Opportunity and Curiosity were launched back in 2003. Unfortunately now connection with them is lost.
 
